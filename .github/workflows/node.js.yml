@@ -26,7 +26,7 @@ jobs:
       with:
         args: '.' # Scans the current directory
     - name: Save njsscan report
-      run: njsscan . --json -o njsscan_report.json 
+      run: njsscan . --json -o njsscan_report.json || echo "njsscan failed" 
     - name: Upload njsscan report
       uses: actions/upload-artifact@v3
       with:
