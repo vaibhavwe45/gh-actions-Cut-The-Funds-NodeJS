@@ -27,6 +27,11 @@ jobs:
         args: '.' # Scans the current directory
     - name: Save njsscan report
       run: njsscan . --json -o njsscan_report.json 
+    - name: Upload njsscan report
+      uses: actions/upload-artifact@v3
+      with:
+        name: njsscan-report
+        path: njsscan_report.json
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
