@@ -21,6 +21,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Run njsscan
+      uses: ajinabraham/njsscan-action@master
+      with:
+        args: '.' # Scans the current directory
+    - name: Save njsscan report
+      run: njsscan . --json -o njsscan_report.json 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
@@ -29,3 +35,4 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    
