@@ -21,10 +21,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Install njsscan
+      uses: pip install njsscan # Scans the current directory
     - name: Run njsscan
-      uses: ajinabraham/njsscan-action@master
-      with:
-        args: '.' # Scans the current directory
+      uses: njsscan .
     - name: Save njsscan report
       run: njsscan . --json -o njsscan_report.json || echo "njsscan failed" 
     - name: Upload njsscan report
