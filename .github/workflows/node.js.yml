@@ -35,6 +35,13 @@ jobs:
       with:
         name: njsscan-report
         path: njsscan_report.json
+    - name: Audit report
+      run: npm audit --json | tee audit_report.json
+    - name: Upload audit report
+      uses: actions/upload-artifact@v3
+      with:
+        name: audit-report
+        path: audit_report.json
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
