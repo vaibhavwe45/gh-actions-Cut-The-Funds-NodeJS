@@ -21,17 +21,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install njsscan
-      uses: pip install njsscan # Scans the current directory
-    - name: Run njsscan
-      uses: njsscan .
-    - name: Save njsscan report
-      run: njsscan . --json -o njsscan_report.json || echo "njsscan failed" 
-    - name: Upload njsscan report
-      uses: actions/upload-artifact@v3
-      with:
-        name: njsscan-report
-        path: njsscan_report.json
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
@@ -40,4 +29,18 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x' # Set up Python environment
+    - name: Install njsscan
+      run: pip install --upgrade njsscan # Install njsscan
+    - name: Run njsscan
+      run: njsscan . # Run njsscan on the current directory
+    - name: Save njsscan report
+      run: njsscan . --json -o njsscan_report.json # Save the report in JSON format
+    - name: Upload njsscan report
+      uses: actions/upload-artifact@v3
+      with:
+        name: njsscan-report
+        path: njsscan_report.json
