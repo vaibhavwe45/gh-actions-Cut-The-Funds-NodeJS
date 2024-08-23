@@ -1,7 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Synk Node.js Check
+name: Snyk Node.js Check
 
 on:
   push:
@@ -11,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -25,13 +21,9 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm run build --if-present
     - run: npm install
-    - uses: actions/checkout@master
+    - run: npm run build --if-present
     - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/node@master
+      uses: snyk/actions/node@v1
       env:
-        SNYK_TOKEN: ${{ secrets.SYNK_TOKEN }}
-      
-
-    
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
