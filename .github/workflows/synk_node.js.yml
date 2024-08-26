@@ -1,4 +1,4 @@
-name: Synk Node.js Check
+name: Snyk Node.js Check
 
 on:
   push:
@@ -8,13 +8,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
@@ -24,8 +22,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm run build --if-present
-    - uses: actions/checkout@master
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
+      with:
+        command: test
+        json: false
       env:
-        SNYK_TOKEN: ${{ secrets.SYNK_TOKEN }}
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
