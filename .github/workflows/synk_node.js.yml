@@ -28,5 +28,5 @@ jobs:
         command: test
         json: false
       env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        SNYK_TOKEN: ${{ secrets.SYNK_TOKEN }}
 
